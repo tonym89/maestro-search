@@ -16,7 +16,7 @@ export function InfiniteHits({
     <View style={styles.resultsContainer}>
       <FlatList
         data={hits}
-        keyExtractor={(item) => item.objectID}
+        keyExtractor={(item) => item.slug}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         numColumns={2}
         onEndReached={() => {

@@ -1,5 +1,20 @@
 import { Text, StyleSheet, Image, View } from "react-native";
 import { Highlight } from "./Highlight";
+import { Typography, TextVariant } from "./Typography";
+import { LinearGradient } from "expo-linear-gradient";
+
+const LINEAR_GRADIENT_COLORS = [
+  "transparent",
+  "transparent",
+  "transparent",
+  "transparent",
+  "transparent",
+  "rgba(25, 25, 25,0.1)",
+  "rgba(25, 25, 25,0.5)",
+  "rgba(25, 25, 25,0.7)",
+  "rgba(25, 25, 25,0.9)",
+  "rgba(25, 25, 25,1)",
+];
 
 function Hit({ hit }) {
   const {
@@ -10,11 +25,26 @@ function Hit({ hit }) {
   } = hit;
   return (
     <View style={styles.cardContainer}>
-      <Image source={{ uri: image }} style={{ width: "100%", height: 200 }} />
-      {/* <Highlight hit={hit} attribute="title" /> */}
+      <Image source={{ uri: image }} style={styles.image} />
+      <LinearGradient
+        colors={LINEAR_GRADIENT_COLORS}
+        style={styles.linearGradientBackground}
+      />
       <View style={styles.contentContainer}>
-        <Text style={styles.title}>{full_name}</Text>
-        <Text style={styles.subtitle}>{title}</Text>
+        <Typography
+          variant={TextVariant.Title}
+          center
+          style={styles.bottomMargin}
+        >
+          {full_name}
+        </Typography>
+        <Typography
+          variant={TextVariant.Subtitle}
+          center
+          style={styles.bottomMargin}
+        >
+          {title}
+        </Typography>
       </View>
     </View>
   );
@@ -25,25 +55,23 @@ const styles = StyleSheet.create({
     flex: 1,
     position: "relative",
   },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "white",
-    flexShrink: 1,
-    textAlign: "center",
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#bfbfbf",
-    flexShrink: 1,
-    textAlign: "center",
-  },
   contentContainer: {
     position: "absolute",
-    bottom: 10,
+    bottom: 0,
     justifyContent: "center",
     width: "100%",
   },
+  linearGradientBackground: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    height: "100%",
+  },
+  bottomMargin: {
+    marginBottom: 4,
+  },
+  image: { width: "100%", height: 240 },
 });
 
 export { Hit };
