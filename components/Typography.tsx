@@ -47,10 +47,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#FFFFFF",
+    marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
     color: "#bfbfbf",
+    marginBottom: 8,
   },
   body: {
     fontSize: 16,
