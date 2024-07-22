@@ -11,13 +11,9 @@ export default function RootLayout() {
       <SafeAreaView style={styles.safe}>
         <Stack
           screenOptions={{
-            headerStyle: {
-              backgroundColor: "black",
-            },
+            headerStyle: styles.headerStyle,
             headerTintColor: "#fff",
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
+            headerTitleStyle: styles.headerTitleStyle,
             headerRight: () => (
               <Pressable
                 onPress={() =>
@@ -58,4 +54,6 @@ export default function RootLayout() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: "black" },
+  headerStyle: { backgroundColor: "black" },
+  headerTitleStyle: { fontWeight: "bold" },
 });
