@@ -1,19 +1,30 @@
 import React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import { useInfiniteHits } from "react-instantsearch-core";
+import { TextVariant, Typography } from "./Typography";
 
 export function InfiniteHits({
   listEmptyComponent,
   hitComponent: Hit,
   ...props
 }) {
-  const { hits, isLastPage, showMore } = useInfiniteHits({
+  const { hits, isLastPage, showMore, results, ...rest } = useInfiniteHits({
     ...props,
     escapeHTML: false,
   });
 
+  const query = results?.query;
+
   return (
     <View style={styles.resultsContainer}>
+      {query && hits.length > 0 ? (
+        <Typography variant={TextVariant.Body} style={styles.searchResultsText}>
+          Showing search results for{" "}
+          <Typography variant={TextVariant.Body} style={styles.queryTerm}>
+            {query}
+          </Typography>
+        </Typography>
+      ) : null}
       <FlatList
         data={hits}
         keyExtractor={(item) => item.slug}
@@ -65,4 +76,8 @@ const styles = StyleSheet.create({
   outerCardContainer: {
     flex: 1,
   },
+  searchResultsText: {
+    marginBottom: 12,
+  },
+  queryTerm: { color: "#FFFFFF", fontWeight: "bold" },
 });
