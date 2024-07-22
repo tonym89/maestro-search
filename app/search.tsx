@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import algoliasearch from "algoliasearch/lite";
 import { Configure, InstantSearch } from "react-instantsearch-core";
-import { InfiniteHits, SearchBox, Hit, ListEmpty } from "../components";
+import { SearchPanel } from "../components";
 
 const searchClient = algoliasearch(
   process.env.EXPO_PUBLIC_ALGOLIA_APP_ID,
@@ -14,13 +14,7 @@ export default function Search() {
     <View style={styles.searchContainer}>
       <InstantSearch searchClient={searchClient} indexName="courses">
         <Configure highlightPreTag="<mark>" highlightPostTag="</mark>" />
-        <SearchBox />
-        <InfiniteHits
-          hitComponent={Hit}
-          listEmptyComponent={
-            <ListEmpty text={"There are no results for this search"} />
-          }
-        />
+        <SearchPanel />
       </InstantSearch>
     </View>
   );

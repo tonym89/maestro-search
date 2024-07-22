@@ -1,6 +1,6 @@
 import { StyleSheet, Image, View } from "react-native";
 import { Highlight } from "./Highlight";
-import { TextVariant } from "./Typography";
+import { TextVariant } from "../Typography";
 import { LinearGradient } from "expo-linear-gradient";
 
 const LINEAR_GRADIENT_COLORS = [
@@ -17,12 +17,7 @@ const LINEAR_GRADIENT_COLORS = [
 ];
 
 function Hit({ hit }) {
-  const {
-    title,
-    maestro: { full_name },
-    slug,
-    image,
-  } = hit;
+  const { image } = hit;
   return (
     <View style={styles.cardContainer}>
       <Image source={{ uri: image }} style={styles.image} />

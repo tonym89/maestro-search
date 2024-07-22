@@ -4,7 +4,7 @@ import {
   getHighlightedParts,
   getPropertyByPath,
 } from "instantsearch.js/es/lib/utils";
-import { Typography } from "./Typography";
+import { Typography } from "../Typography";
 
 function HighlightPart({ children, isHighlighted, variant }) {
   return (
