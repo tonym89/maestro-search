@@ -1,6 +1,6 @@
-import { Text, StyleSheet, Image, View } from "react-native";
+import { StyleSheet, Image, View } from "react-native";
 import { Highlight } from "./Highlight";
-import { Typography, TextVariant } from "./Typography";
+import { TextVariant } from "./Typography";
 import { LinearGradient } from "expo-linear-gradient";
 
 const LINEAR_GRADIENT_COLORS = [
@@ -31,20 +31,12 @@ function Hit({ hit }) {
         style={styles.linearGradientBackground}
       />
       <View style={styles.contentContainer}>
-        <Typography
-          variant={TextVariant.Title}
-          center
-          style={styles.bottomMargin}
-        >
-          {full_name}
-        </Typography>
-        <Typography
+        <Highlight attribute="title" hit={hit} variant={TextVariant.Title} />
+        <Highlight
+          attribute="maestro.full_name"
+          hit={hit}
           variant={TextVariant.Subtitle}
-          center
-          style={styles.bottomMargin}
-        >
-          {title}
-        </Typography>
+        />
       </View>
     </View>
   );
@@ -60,6 +52,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     width: "100%",
+    paddingHorizontal: 4,
   },
   linearGradientBackground: {
     position: "absolute",

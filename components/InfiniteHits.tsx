@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, FlatList, ActivityIndicator } from "react-native";
 import { useInfiniteHits } from "react-instantsearch-core";
 import { TextVariant, Typography } from "./Typography";
 
@@ -12,6 +12,11 @@ export function InfiniteHits({
     ...props,
     escapeHTML: false,
   });
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [results.page]);
 
   const query = results?.query;
 
@@ -25,31 +30,37 @@ export function InfiniteHits({
           </Typography>
         </Typography>
       ) : null}
-      <FlatList
-        data={hits}
-        keyExtractor={(item) => item.slug}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        numColumns={2}
-        onEndReached={() => {
-          if (!isLastPage) {
-            showMore();
-          }
-        }}
-        renderItem={({ item, index }) => (
-          <View
-            style={[
-              styles.outerCardContainer,
-              index % 2 === 0 ? styles.marginRight : styles.marginLeft,
-            ]}
-          >
-            <Hit hit={item} />
-          </View>
-        )}
-        contentContainerStyle={{
-          ...(hits.length > 0 ? {} : styles.contentContainerStyle),
-        }}
-        ListEmptyComponent={listEmptyComponent}
-      />
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#FFFFFF" />
+        </View>
+      ) : (
+        <FlatList
+          data={hits}
+          keyExtractor={(item) => item.slug}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          numColumns={2}
+          onEndReached={() => {
+            if (!isLastPage) {
+              showMore();
+            }
+          }}
+          renderItem={({ item, index }) => (
+            <View
+              style={[
+                styles.outerCardContainer,
+                index % 2 === 0 ? styles.marginRight : styles.marginLeft,
+              ]}
+            >
+              <Hit hit={item} />
+            </View>
+          )}
+          contentContainerStyle={{
+            ...(hits.length > 0 ? {} : styles.contentContainerStyle),
+          }}
+          ListEmptyComponent={listEmptyComponent}
+        />
+      )}
     </View>
   );
 }
@@ -80,4 +91,5 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   queryTerm: { color: "#FFFFFF", fontWeight: "bold" },
+  loadingContainer: { flex: 1, justifyContent: "center" },
 });

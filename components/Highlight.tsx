@@ -1,55 +1,62 @@
 import React, { Fragment } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import {
   getHighlightedParts,
   getPropertyByPath,
 } from "instantsearch.js/es/lib/utils";
+import { Typography } from "./Typography";
 
-function HighlightPart({ children, isHighlighted }) {
+function HighlightPart({ children, isHighlighted, variant }) {
   return (
-    <Text style={[isHighlighted ? styles.highlighted : styles.nonHighlighted]}>
+    <Typography
+      style={isHighlighted && styles.highlighted}
+      center
+      variant={variant}
+    >
       {children}
-    </Text>
+    </Typography>
   );
 }
 
-export function Highlight({ hit, attribute, separator = ", " }) {
+export function Highlight({ hit, variant, attribute, separator = ", " }) {
   const { value: attributeValue = "" } =
     getPropertyByPath(hit._highlightResult, attribute) || {};
   const parts = getHighlightedParts(attributeValue);
 
   return (
-    <View
-      style={{ backgroundColor: "red", borderWidth: 1, borderColor: "yellow" }}
-    >
+    <Typography variant={variant} center>
       {parts.map((part, partIndex) => {
-        // if (Array.isArray(part)) {
-        //   const isLastPart = partIndex === parts.length - 1;
+        if (Array.isArray(part)) {
+          const isLastPart = partIndex === parts.length - 1;
 
-        //   return (
-        //     <Fragment key={partIndex}>
-        //       {part.map((subPart, subPartIndex) => (
-        //         <HighlightPart
-        //           key={subPartIndex}
-        //           isHighlighted={subPart.isHighlighted}
-        //           // textStyle={{flexWrap:}}
-        //         >
-        //           {subPart.value}
-        //         </HighlightPart>
-        //       ))}
+          return (
+            <Fragment key={partIndex}>
+              {part.map((subPart, subPartIndex) => (
+                <HighlightPart
+                  key={subPartIndex}
+                  isHighlighted={subPart.isHighlighted}
+                  variant={variant}
+                >
+                  {subPart.value}
+                </HighlightPart>
+              ))}
 
-        //       {!isLastPart && separator}
-        //     </Fragment>
-        //   );
-        // }
+              {!isLastPart && separator}
+            </Fragment>
+          );
+        }
 
         return (
-          <HighlightPart key={partIndex} isHighlighted={part.isHighlighted}>
+          <HighlightPart
+            key={partIndex}
+            isHighlighted={part.isHighlighted}
+            variant={variant}
+          >
             {part.value}
           </HighlightPart>
         );
       })}
-    </View>
+    </Typography>
   );
 }
 
@@ -58,11 +65,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     backgroundColor: "#f5df4d",
     color: "#6f6106",
-  },
-  nonHighlighted: {
-    fontWeight: "bold",
-    backgroundColor: "transparent",
-    color: "white",
-    flexWrap: "wrap",
   },
 });
