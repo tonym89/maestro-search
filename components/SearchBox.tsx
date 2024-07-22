@@ -32,6 +32,7 @@ export function SearchBox(props) {
         autoCorrect={false}
         spellCheck={false}
         autoComplete="off"
+        placeholder="Search by course title or topic"
       />
     </View>
   );

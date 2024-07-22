@@ -1,6 +1,6 @@
 import React from "react";
-import { SafeAreaView, StatusBar, StyleSheet, View, Text } from "react-native";
-import { InfiniteHits, SearchBox, Highlight } from "./components";
+import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
+import { InfiniteHits, SearchBox, Hit, ListEmpty } from "./components";
 import algoliasearch from "algoliasearch/lite";
 import { Configure, InstantSearch } from "react-instantsearch-core";
 
@@ -10,20 +10,6 @@ const searchClient = algoliasearch(
   process.env.EXPO_PUBLIC_ALGOLIA_SEARCH_KEY
 );
 
-function Hit({ hit }) {
-  const {
-    title,
-    maestro: { full_name },
-    slug,
-    image,
-  } = hit;
-  return (
-    <Text>
-      <Highlight hit={hit} attribute="title" />
-    </Text>
-  );
-}
-
 export default function App() {
   return (
     <SafeAreaView style={styles.safe}>
@@ -32,7 +18,12 @@ export default function App() {
         <InstantSearch searchClient={searchClient} indexName="courses">
           <Configure highlightPreTag="<mark>" highlightPostTag="</mark>" />
           <SearchBox />
-          <InfiniteHits hitComponent={Hit} />
+          <InfiniteHits
+            hitComponent={Hit}
+            listEmptyComponent={
+              <ListEmpty text={"There are no results for this search"} />
+            }
+          />
         </InstantSearch>
       </View>
     </SafeAreaView>
@@ -42,11 +33,10 @@ export default function App() {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: "#252b33",
+    backgroundColor: "#1A1A1A",
   },
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
     flexDirection: "column",
   },
 });

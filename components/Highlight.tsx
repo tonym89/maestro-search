@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import {
   getHighlightedParts,
   getPropertyByPath,
@@ -7,7 +7,7 @@ import {
 
 function HighlightPart({ children, isHighlighted }) {
   return (
-    <Text style={isHighlighted ? styles.highlighted : styles.nonHighlighted}>
+    <Text style={[isHighlighted ? styles.highlighted : styles.nonHighlighted]}>
       {children}
     </Text>
   );
@@ -19,26 +19,29 @@ export function Highlight({ hit, attribute, separator = ", " }) {
   const parts = getHighlightedParts(attributeValue);
 
   return (
-    <>
+    <View
+      style={{ backgroundColor: "red", borderWidth: 1, borderColor: "yellow" }}
+    >
       {parts.map((part, partIndex) => {
-        if (Array.isArray(part)) {
-          const isLastPart = partIndex === parts.length - 1;
+        // if (Array.isArray(part)) {
+        //   const isLastPart = partIndex === parts.length - 1;
 
-          return (
-            <Fragment key={partIndex}>
-              {part.map((subPart, subPartIndex) => (
-                <HighlightPart
-                  key={subPartIndex}
-                  isHighlighted={subPart.isHighlighted}
-                >
-                  {subPart.value}
-                </HighlightPart>
-              ))}
+        //   return (
+        //     <Fragment key={partIndex}>
+        //       {part.map((subPart, subPartIndex) => (
+        //         <HighlightPart
+        //           key={subPartIndex}
+        //           isHighlighted={subPart.isHighlighted}
+        //           // textStyle={{flexWrap:}}
+        //         >
+        //           {subPart.value}
+        //         </HighlightPart>
+        //       ))}
 
-              {!isLastPart && separator}
-            </Fragment>
-          );
-        }
+        //       {!isLastPart && separator}
+        //     </Fragment>
+        //   );
+        // }
 
         return (
           <HighlightPart key={partIndex} isHighlighted={part.isHighlighted}>
@@ -46,7 +49,7 @@ export function Highlight({ hit, attribute, separator = ", " }) {
           </HighlightPart>
         );
       })}
-    </>
+    </View>
   );
 }
 
@@ -57,8 +60,9 @@ const styles = StyleSheet.create({
     color: "#6f6106",
   },
   nonHighlighted: {
-    fontWeight: "normal",
+    fontWeight: "bold",
     backgroundColor: "transparent",
-    color: "black",
+    color: "white",
+    flexWrap: "wrap",
   },
 });
