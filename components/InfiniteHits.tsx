@@ -46,7 +46,6 @@ export function InfiniteHits({
 const styles = StyleSheet.create({
   resultsContainer: {
     flex: 1,
-    paddingHorizontal: 8,
   },
   contentContainerStyle: {
     flex: 1,

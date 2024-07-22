@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { StyleSheet, View, TextInput } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useSearchBox } from "react-instantsearch-core";
 
 export function SearchBox(props) {
@@ -34,22 +35,30 @@ export function SearchBox(props) {
         autoComplete="off"
         placeholder="Search by course title or topic"
       />
+      <View style={styles.iconContainer}>
+        <Ionicons size={20} name="search-outline" />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#252b33",
-    padding: 18,
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 12,
+  },
+  iconContainer: {
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    backgroundColor: "white",
   },
   input: {
-    height: 48,
-    padding: 12,
+    paddingLeft: 10,
+    paddingVertical: 8,
+    backgroundColor: "white",
     fontSize: 16,
-    backgroundColor: "#fff",
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: "#ddd",
+    lineHeight: 20,
+    flex: 1,
   },
 });

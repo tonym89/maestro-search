@@ -14,7 +14,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.safe}>
       <StatusBar style="light" />
-      <View style={styles.container}>
+      <View style={styles.searchContainer}>
         <InstantSearch searchClient={searchClient} indexName="courses">
           <Configure highlightPreTag="<mark>" highlightPostTag="</mark>" />
           <SearchBox />
@@ -35,8 +35,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#1A1A1A",
   },
-  container: {
+  searchContainer: {
     flex: 1,
     flexDirection: "column",
+    paddingHorizontal: 8,
   },
 });
