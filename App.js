@@ -1,8 +1,8 @@
 import React from "react";
 import { SafeAreaView, StatusBar, StyleSheet, View, Text } from "react-native";
-import { InfiniteHits, SearchBox } from "./components";
+import { InfiniteHits, SearchBox, Highlight } from "./components";
 import algoliasearch from "algoliasearch/lite";
-import { InstantSearch } from "react-instantsearch-core";
+import { Configure, InstantSearch } from "react-instantsearch-core";
 
 // TODO: ADD Application ID + Search Key to .env file
 const searchClient = algoliasearch(
@@ -18,10 +18,9 @@ function Hit({ hit }) {
     image,
   } = hit;
   return (
-    <View>
-      <Text>Course: {title}</Text>
-      <Text>Maestro: {full_name}</Text>
-    </View>
+    <Text>
+      <Highlight hit={hit} attribute="title" />
+    </Text>
   );
 }
 
@@ -31,6 +30,7 @@ export default function App() {
       <StatusBar style="light" />
       <View style={styles.container}>
         <InstantSearch searchClient={searchClient} indexName="courses">
+          <Configure highlightPreTag="<mark>" highlightPostTag="</mark>" />
           <SearchBox />
           <InfiniteHits hitComponent={Hit} />
         </InstantSearch>
