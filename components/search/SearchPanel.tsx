@@ -10,10 +10,21 @@ export function SearchPanel() {
   const { hits, isLastPage, showMore, results, ...rest } = useInfiniteHits({
     escapeHTML: false,
   });
-
   const { query, refine } = useSearchBox();
   const [inputValue, setInputValue] = useState(query);
   const inputRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  /*
+    useInfiniteHits does not provide an isLoading state, 
+    so we need to use this very imperfect workaround until 
+    we can switch to useInstantSearch: 
+    https://github.com/algolia/react-instantsearch/issues/3435
+    https://github.com/algolia/instantsearch/discussions/5358
+  */
+  useEffect(() => {
+    setIsLoading(false);
+  }, [results.page]);
 
   function setQuery(newQuery) {
     setInputValue(newQuery);
@@ -27,19 +38,6 @@ export function SearchPanel() {
   if (query !== inputValue && !inputRef.current?.isFocused()) {
     setInputValue(query);
   }
-
-  const [isLoading, setIsLoading] = useState(true);
-
-  /*
-    useInfiniteHits does not provide an isLoading state, 
-    so we need to use this very imperfect workaround until 
-    we can switch to useInstantSearch: 
-    https://github.com/algolia/react-instantsearch/issues/3435
-    https://github.com/algolia/instantsearch/discussions/5358
-  */
-  useEffect(() => {
-    setIsLoading(false);
-  }, [results.page]);
 
   return (
     <>
